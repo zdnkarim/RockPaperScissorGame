@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Rock Paper Scissor Game</string>
+    <string name="text_player">PLAYER</string>
+    <string name="text_computer">COMPUTER</string>
 </resources>
