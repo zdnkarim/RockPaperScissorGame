@@ -2,4 +2,9 @@
     <string name="app_name">Rock Paper Scissor Game</string>
     <string name="text_player">PLAYER</string>
     <string name="text_computer">COMPUTER</string>
+    <string name="text_result_draw">DRAW!!</string>
+    <string name="text_result_lose">YOU LOSE</string>
+    <string name="text_result_win">YOU WIN</string>
+    <string name="text_suggest_restart">Restart First!</string>
+    <string name="text_suggest_play">Play First!</string>
 </resources>
