@@ -10,178 +10,118 @@ import android.util.Log
 import android.view.Window
 import com.catnip.rockpaperscissorgame.R
 import com.catnip.rockpaperscissorgame.databinding.ActivityMainBinding
+import com.shashank.sony.fancytoastlib.FancyToast
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private var playerSelected: Int? = null
-    private var comSelected: Int? = null
-    private lateinit var listSelection: Array<androidx.cardview.widget.CardView>
+    private var playerValue = -1
+    private var comValue = -1
+    private var isGameFinished: Boolean = false
+    private lateinit var listBtn: Array<androidx.cardview.widget.CardView>
+    private lateinit var listImageShowPosition: Array<android.widget.ImageView>
     private var timer: CountDownTimer? = null
+    private val TAG = MainActivity::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        start()
+        buttonSelectList()
+        imageViewPositionList()
+        setClickEvent()
     }
 
-    private fun start() {
-        binding.ivResetGame.isClickable = false
-        main()
-    }
-
-    private fun main() {
-        listSelection =
+    private fun imageViewPositionList() {
+        listImageShowPosition =
             arrayOf(
-                binding.cvRockSelection,
-                binding.cvPaperSelection,
-                binding.cvScissorSelection
+                binding.ivPlayerSelected,
+                binding.ivComputerSelected
             )
-
-        listSelection.forEachIndexed { index, frameLayout ->
-            frameLayout.setOnClickListener { check ->
-                playerSelected = index
-                listSelection.forEach {
-                    frameLayout.setCardBackgroundColor(Color.LTGRAY)
-                    if (check == it) {
-                        binding.ivPlayerSelected.setImageResource(showImage(index, 0))
-                    }
-                }
-                loadingScreen()
-            }
-        }
     }
 
-    private fun chooseTheWinner(player: Int, com: Int) {
-        val dialog = Dialog(this@MainActivity)
-        dialog.window?.setTitle(Window.FEATURE_NO_TITLE.toString())
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setContentView(R.layout.loading_screen)
-        dialog.setCancelable(false)
-        dialog.show()
-        timer = object : CountDownTimer(5000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-            }
-
-            override fun onFinish() {
-                when {
-                    player - com == 0 -> {
-                        showResult("DRAW!!!")
-                        Log.d(
-                            "RESULT",
-                            "DRAW_-"
-                        )
-                    }
-                    ((player + 1) % 3) == com -> {
-                        showResult("YOU LOSE :(")
-                        Log.d(
-                            "RESULT",
-                            "USER LOSE"
-                        )
-                    }
-                    else -> {
-                        showResult("YOU WIN :v")
-                        Log.d(
-                            "RESULT",
-                            "USER WIN"
-                        )
-                    }
-                }
-                dialog.cancel()
-            }
-        }
-        timer?.start()
+    private fun buttonSelectList() {
+        listBtn =
+            arrayOf(
+                binding.cvBtnRock,
+                binding.cvBtnPaper,
+                binding.cvBtnScissor
+            )
     }
 
-    private fun showResult(s: String) {
-        binding.tvResult.text = s
-        binding.ivResetGame.isClickable = true
-        binding.ivResetGame.setOnClickListener {
-            restart()
-        }
-    }
-
-    private fun restart() {
-        binding.ivResetGame.isClickable = false
-        binding.tvResult.text = ""
-        playerSelected = null
-        comSelected = null
-        listSelection.forEachIndexed { _, frameLayout ->
-            frameLayout.isClickable = true
-            frameLayout.setCardBackgroundColor(Color.WHITE)
-        }
-        removeImage(binding)
-        main()
-    }
-
-    private fun showImage(indexImage: Int, i: Int): Int {
-        return when (indexImage) {
-            0 -> {
-                if (i == 0) {
-                    Log.d(
-                        "USER SELECT",
-                        "USER SELECT ROCK"
-                    )
+    private fun setClickEvent() {
+        listBtn.forEachIndexed { index, cardView ->
+            cardView.setOnClickListener { check ->
+                playerValue = index
+                if (isGameFinished == false) {
+                    listBtn.forEach {
+                        if (check == it) {
+                            binding.ivPlayerSelected.setImageResource(showImagePlayer(index))
+                        }
+                    }
+                    cardView.setCardBackgroundColor(Color.LTGRAY)
+                    Log.d(TAG, "Player select : $playerValue")
+                    startGame()
                 } else {
-                    Log.d(
-                        "COM SELECT",
-                        "COM SELECT ROCK"
-                    )
+                    FancyToast.makeText(
+                        this,
+                        getString(R.string.text_suggest_restart),
+                        FancyToast.LENGTH_LONG,
+                        FancyToast.INFO,
+                        true
+                    ).show()
                 }
+            }
+        }
+        binding.ivResetGame.setOnClickListener {
+            if (isGameFinished) {
+                resetGame()
+            } else {
+                FancyToast.makeText(
+                    this,
+                    getString(R.string.text_suggest_play),
+                    FancyToast.LENGTH_LONG,
+                    FancyToast.INFO,
+                    true
+                ).show()
+            }
+
+        }
+    }
+
+    private fun startGame() {
+        comValue = (0..2).random()
+        loadingScreen(comValue)
+        Log.d(TAG, "Computer select : $comValue")
+        isGameFinished = true
+    }
+
+    private fun showImagePlayer(value: Int): Int {
+        return when (value) {
+            0 -> {
                 R.drawable.ic_rock_selection
             }
             1 -> {
-                if (i == 0) {
-                    Log.d(
-                        "USER SELECT",
-                        "USER SELECT PAPER"
-                    )
-                } else {
-                    Log.d(
-                        "COM SELECT",
-                        "COM SELECT PAPER"
-                    )
-                }
                 R.drawable.ic_paper_selection
             }
             else -> {
-                if (i == 0) {
-                    Log.d(
-                        "USER SELECT",
-                        "USER SELECT SCISSOR"
-                    )
-                } else {
-                    Log.d(
-                        "COM SELECT",
-                        "COM SELECT SCISSOR"
-                    )
-                }
                 R.drawable.ic_scissor_selection
             }
         }
     }
 
-    private fun removeImage(binding: ActivityMainBinding) {
-        binding.ivPlayerSelected.setImageResource(0)
-        binding.ivComputerSelected.setImageResource(0)
-    }
-
-    private fun disableClickable() {
-        listSelection.forEachIndexed { _, frameLayout ->
-            frameLayout.isClickable = false
+    private fun resetGame() {
+        isGameFinished = false
+        listImageShowPosition.forEachIndexed { index, imageView ->
+            imageView.setImageResource(0)
         }
-    }
-
-    private fun checkComputerSelect() {
-        comSelected = (0..2).random()
-        binding.ivComputerSelected.setImageResource(showImage(comSelected!!, 1))
-        playerSelected?.let {
-            chooseTheWinner(it, comSelected!!)
-            disableClickable()
+        listBtn.forEachIndexed { index, cardView ->
+            cardView.setCardBackgroundColor(Color.WHITE)
         }
+        binding.tvResult.text = ""
+
     }
 
-    private fun loadingScreen() {
+    private fun loadingScreen(value: Int) {
         val dialog = Dialog(this@MainActivity)
         dialog.window?.setTitle(Window.FEATURE_NO_TITLE.toString())
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -194,10 +134,29 @@ class MainActivity : AppCompatActivity() {
 
             override fun onFinish() {
                 dialog.cancel()
-                checkComputerSelect()
+                binding.ivComputerSelected.setImageResource(showImagePlayer(value))
+                showResult()
             }
         }
         timer?.start()
         return
     }
+
+    private fun showResult() {
+        when {
+            playerValue - comValue == 0 -> {
+                binding.tvResult.text = getString(R.string.text_result_draw)
+                Log.d(TAG, "DRAW")
+            }
+            ((playerValue + 1) % 3) == comValue -> {
+                binding.tvResult.text = getString(R.string.text_result_lose)
+                Log.d(TAG, "USER LOSE")
+            }
+            else -> {
+                binding.tvResult.text = getString(R.string.text_result_win)
+                Log.d(TAG, "USER WIN")
+            }
+        }
+    }
+
 }
