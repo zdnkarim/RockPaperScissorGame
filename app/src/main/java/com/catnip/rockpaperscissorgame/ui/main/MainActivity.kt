@@ -10,7 +10,6 @@ import android.util.Log
 import android.view.Window
 import com.catnip.rockpaperscissorgame.R
 import com.catnip.rockpaperscissorgame.databinding.ActivityMainBinding
-import com.catnip.rockpaperscissorgame.utils.ButtonStatusUtils
 import com.shashank.sony.fancytoastlib.FancyToast
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +17,6 @@ class MainActivity : AppCompatActivity() {
     private var playerValue = -1
     private var comValue = -1
     private var isGameFinished: Boolean = false
-    private var ButtonStatusUtils = ButtonStatusUtils()
     private lateinit var listBtn: Array<androidx.cardview.widget.CardView>
     private lateinit var listImageShowPosition: Array<android.widget.ImageView>
     private var timer: CountDownTimer? = null
@@ -60,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                             binding.ivPlayerSelected.setImageResource(showImagePlayer(index))
                         }
                     }
-                    ButtonStatusUtils.btnChangeColor(Color.LTGRAY, cardView)
+                    cardView.setCardBackgroundColor(Color.LTGRAY)
                     Log.d(TAG, "Player select : $playerValue")
                     startGame()
                 } else {
@@ -117,7 +115,7 @@ class MainActivity : AppCompatActivity() {
             imageView.setImageResource(0)
         }
         listBtn.forEachIndexed { index, cardView ->
-            ButtonStatusUtils.btnChangeColor(Color.WHITE, cardView)
+            cardView.setCardBackgroundColor(Color.WHITE)
         }
         binding.tvResult.text = ""
 
