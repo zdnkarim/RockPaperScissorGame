@@ -5,7 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import com.catnip.rockpaperscissorgame.R
-import com.catnip.rockpaperscissorgame.ui.main.MainActivity
+import com.catnip.rockpaperscissorgame.ui.main.GameActivity
+import com.catnip.rockpaperscissorgame.ui.selectmode.SelectModeActivity
 
 class SplashScreenActivity : AppCompatActivity() {
 
@@ -23,7 +24,7 @@ class SplashScreenActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
-                val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
+                val intent = Intent(this@SplashScreenActivity, SelectModeActivity::class.java)
                 startActivity(intent)
             }
 

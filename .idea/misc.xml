@@ -3,13 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/MBKM/Binar Academy/APP/RockPaperScissorGame/app/src/main/res/drawable/round_corner.xml" value="0.12604166666666666" />
-        <entry key="..\:/MBKM/Binar Academy/APP/RockPaperScissorGame/app/src/main/res/layout/activity_custom_dialog.xml" value="0.22" />
+        <entry key="..\:/MBKM/Binar Academy/APP/RockPaperScissorGame/app/src/main/res/drawable/ic_custom_background.xml" value="0.1" />
+        <entry key="..\:/MBKM/Binar Academy/APP/RockPaperScissorGame/app/src/main/res/drawable/ic_launcher_background.xml" value="0.240625" />
+        <entry key="..\:/MBKM/Binar Academy/APP/RockPaperScissorGame/app/src/main/res/layout/activity_input_name.xml" value="0.223731884057971" />
         <entry key="..\:/MBKM/Binar Academy/APP/RockPaperScissorGame/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/MBKM/Binar Academy/APP/RockPaperScissorGame/app/src/main/res/layout/activity_splash_screen.xml" value="0.21041666666666667" />
-        <entry key="..\:/MBKM/Binar Academy/APP/RockPaperScissorGame/app/src/main/res/layout/custom_dialog.xml" value="0.33" />
-        <entry key="..\:/MBKM/Binar Academy/APP/RockPaperScissorGame/app/src/main/res/layout/loading_screen.xml" value="0.33" />
-        <entry key="..\:/MBKM/Binar Academy/APP/RockPaperScissorGame/app/src/main/res/menu/menu_main.xml" value="0.22447916666666667" />
+        <entry key="..\:/MBKM/Binar Academy/APP/RockPaperScissorGame/app/src/main/res/layout/activity_select_mode.xml" value="0.18" />
+        <entry key="..\:/MBKM/Binar Academy/APP/RockPaperScissorGame/app/src/main/res/layout/activity_splash_screen.xml" value="0.22447916666666667" />
+        <entry key="..\:/MBKM/Binar Academy/APP/RockPaperScissorGame/app/src/main/res/layout/fragment_input_name.xml" value="0.25" />
+        <entry key="..\:/MBKM/Binar Academy/APP/RockPaperScissorGame/app/src/main/res/layout/layout_input_name.xml" value="0.223731884057971" />
       </map>
     </option>
   </component>

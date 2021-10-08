@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.catnip.rockpaperscissorgame" >
+    package="com.catnip.rockpaperscissorgame">
 
     <application
         android:allowBackup="true"
@@ -8,10 +8,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.RockPaperScissorGame" >
+        android:theme="@style/Theme.RockPaperScissorGame.NoActionBar.FullScreen">
+        <activity
+            android:name=".ui.selectmode.SelectModeActivity"
+            android:exported="true" />
         <activity
             android:name=".ui.splashscreen.SplashScreenActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,8 +22,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.main.MainActivity"
-            android:exported="true"/>
+            android:name=".ui.main.GameActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
